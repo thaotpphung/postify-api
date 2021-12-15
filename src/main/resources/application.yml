@@ -1,0 +1,52 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active:
+    - dev
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:h2:./postify-prod
+    username: sa
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: false
+postify:
+  upload-path: uploads-prod
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password:
+    url: jdbc:mysql://localhost:3306/postifyDev
+    username: root
+  jpa:
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+postify:
+  upload-path: uploads-dev
+---
+spring:
+  profiles: test
+postify:
+  upload-path: uploads-test
+  
